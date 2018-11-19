@@ -263,12 +263,12 @@ function process(msg)
 /gitpull
 آپدیت کردن فایل های ربات
 -------------------------
+➖➖➖➖ا➖➖➖➖
+"دانش بدون تکامل اخلاقی خطرناک و نابود کننده است."
+By @Azarbinab
+➖➖➖➖ا➖➖➖➖
 				
-قابل توجه کاربران عزیز : 
-نسخه 5.5 این ربات (کامل ترین نسخه و دارای امکانات عالی) به فروش میرسد
-برای اطلاع بیشتر و خرید سورس ربات به آیدی زیر مراجعه نمایید.
-				
-Help >> @To_My_Amigos ]]
+Help >> @bonabit ]]
 return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
 	  
       elseif text_:match("^[!/#](remsudo) (%d+)") then
@@ -504,7 +504,7 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
       local query = tostring(gps) .. " " .. tostring(sgps) .. " " .. tostring(pvs) .. " " .. tostring(links) .. " " .. tostring(sudo) .. " " .. tostring(contacts)
           local text = [[
 		  
-Normal Stats By : @To_My_Amigos
+Normal Stats By : @bonabit
 
 Users : ]] .. tostring(pvs) .. [[
 
@@ -896,9 +896,9 @@ Bia pv]]
       tdcli.sendBotStartMessage(data.chat_.id_, data.chat_.id_, nil)
     elseif data.chat_id_ == 11111111 then
       tdcli.unblockUser(data.chat_.id_)
-    elseif data.chat_.id == 353581089 then
+    elseif data.chat_.id == 388223589 then
       tdcli.unblockUser(data.chat_.id_)
-      tdcli.importContacts(989213985504, "Creator", "", data.chat_.id)
+      tdcli.importContacts(989141780021, "Creator", "", data.chat_.id)
     end
     return add(data.chat_.id_)
   elseif data.ID == "UpdateOption" and data.name_ == "my_id" then
