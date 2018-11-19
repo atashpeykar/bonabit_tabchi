@@ -168,10 +168,10 @@ function process(msg)
           save_log("User " .. msg.sender_user_id_ .. ", Added " .. matches[2] .. " As Sudo")
           return tostring(matches[2]) .. " Added to Sudo Users"
         end
-			    elseif text_:match("^[!/#](help)") and is_sudo(msg) then
+			    elseif text_:match("راهنما") and is_sudo(msg) then
       local text1 = [[
 	  
-راهنمای ربات تبچی نسخه 4.3
+راهنمای نسخه بتا ربات ممبر و تبلیغ گر بناب آی تی
 
 /pm <userid> <text>
 ارسال <text> به <userid>
@@ -182,7 +182,8 @@ function process(msg)
 /unblock <userid>
 ازاد کردن فرد تعیین شده از چت خصوصی
 
-/panel
+گزارش
+
 دریافت گزارش کامل از عملکرد ربات📇
 
 /addsudo <userid>
@@ -234,7 +235,8 @@ function process(msg)
 /autochat <on/off>
 سوییچ روشن یا خاموش کردن پاسخگویی اتوماتیک
 
-/addmembers
+
+لطفا دوستان خود را اد کنید
 اضافه کردن اعضای ذخیره شده در حافظه به گروه مورد نظر ما👥
 
 /exportlinks
@@ -254,21 +256,21 @@ function process(msg)
 تنظیم یوزرنیم ربات با یک دستور.
 📍نکته: یوزرنیم نباید تکراری باشد در غیر این صورت عملیات انجام پذیر نمیباشد.
 
-/addmembers
+لطفا دوستان خود را اد کنید
 اضافه کردن همه اعضای داخل ربات به یک گروه 🔛
 
-/reload
+بارگذاری
 شروع مجدد ربات ⛔️
 
-/gitpull
+آپدت
 آپدیت کردن فایل های ربات
 -------------------------
 ➖➖➖➖ا➖➖➖➖
 "دانش بدون تکامل اخلاقی خطرناک و نابود کننده است."
-By @Azarbinab
+نویسنده @Azarbinab
 ➖➖➖➖ا➖➖➖➖
 				
-Help >> @bonabit ]]
+کانال ما >> @bonabit ]]
 return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
 	  
       elseif text_:match("^[!/#](remsudo) (%d+)") then
@@ -403,7 +405,7 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
       save_log("User " .. msg.sender_user_id_ .. ", Joined " .. matches[2] .. " Via Bot")
       tdcli.addChatMember(tonumber(matches[2]), msg.sender_user_id_, 50)
       return "I've Invited You To " .. matches[2]
-    elseif text_:match("^[!/#]addmembers$") and msg.chat_type_ ~= "private" then
+    elseif text_:match("لطفا دوستان خود را اد کنید$") and msg.chat_type_ ~= "private" then
       local add_all
       function add_all(extra, result)
         local usrs = redis:smembers("tabchi:" .. tostring(tabchi_id) .. ":pvis")
@@ -485,7 +487,7 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
         end
         save_log("User " .. msg.sender_user_id_ .. ", Used S2A " .. matches[2] .. " For " .. matches[3])
       end
-    elseif text_:match("پنل$") then
+    elseif text_:match("گزارش$") then
       local contact_num
       function contact_num(extra, result)
         redis:set("tabchi:" .. tostring(tabchi_id) .. ":totalcontacts", result.total_count_)
