@@ -504,17 +504,17 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
       local query = tostring(gps) .. " " .. tostring(sgps) .. " " .. tostring(pvs) .. " " .. tostring(links) .. " " .. tostring(sudo) .. " " .. tostring(contacts)
           local text = [[
 		  
-Normal Stats By : @bonabit
+ساخته شده توسط: @bonabit
 
-Users : ]] .. tostring(pvs) .. [[
+تعداد کاربران : ]] .. tostring(pvs) .. [[
 
-Groups : ]] .. tostring(gps) .. [[
+تعداد گروه ها : ]] .. tostring(gps) .. [[
 
-SuperGroups : ]] .. tostring(sgps) .. [[
+تعداد سوپر گروه ها : ]] .. tostring(sgps) .. [[
 
-Saved Links : ]] .. tostring(links) .. [[
+لینک های ذخیره شده : ]] .. tostring(links) .. [[
 
-Saved Contacts : ]] .. tostring(contacts)
+شماره تلفن های ذخیره شده : ]] .. tostring(contacts)
  return tdcli.sendMessage(msg.chat_id_, 0, 1, text, 1, "")
     elseif text_:match("^[!/#](addedmsg) (.*)") then
       local matches = {
