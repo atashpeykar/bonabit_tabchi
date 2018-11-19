@@ -17,6 +17,7 @@ chmod +x install.sh
 ## ران کردن ربات به صورت پیشفرض
 
 cd bonabit_tabchi
+
 lua creator.lua
 
 بعد ایدی سودو ست کنید مثلا : 123456789
