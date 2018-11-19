@@ -18,12 +18,12 @@ reload()
 
 function tdcli_update_callback(data)
   tabchi.update(data, tabchi_id)
-  if data.message_ and data.message_.content_.text_ and data.message_.content_.text_ == "/reload" and data.message_.sender_user_id_ == tonumber(redis:get("tabchi:" .. tabchi_id ..":fullsudo")) then
+  if data.message_ and data.message_.content_.text_ and data.message_.content_.text_ == "بارگذاری" and data.message_.sender_user_id_ == tonumber(redis:get("tabchi:" .. tabchi_id ..":fullsudo")) then
     reload()
-    tdcli.sendMessage(data.message_.chat_id_, 0, 1, "*Bot Reloaded*", 1, "md")
-  elseif data.message_ and data.message_.content_.text_ and data.message_.content_.text_ == "/gitpull" and data.message_.sender_user_id_ == tonumber(redis:get("tabchi:" .. tabchi_id ..":fullsudo")) then
+    tdcli.sendMessage(data.message_.chat_id_, 0, 1, "*ربات با موفقیت تمام بارگذاری شد*", 1, "md")
+  elseif data.message_ and data.message_.content_.text_ and data.message_.content_.text_ == "آپدت" and data.message_.sender_user_id_ == tonumber(redis:get("tabchi:" .. tabchi_id ..":fullsudo")) then
     io.popen("git fetch --all && git reset --hard origin/master && git pull origin master"):read("*all")
     reload()
-    tdcli.sendMessage(data.message_.chat_id_, 0, 1, "*Updates Received And Bot Reloaded*", 1, "md")
+    tdcli.sendMessage(data.message_.chat_id_, 0, 1, "*ربات با موفقیت توسط سرورهای بناب آی تی آپدت و بروز رسانی شد *", 1, "md")
   end
 end
