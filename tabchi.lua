@@ -204,7 +204,7 @@ function process(msg)
 تکرار کن <متن>
 تکرار متن متغیر ما 
 
-/addedmsg <on/off>
+پیام ذخیره مخاطب روشن / خاموش
 اگر این سوییچ روشن باشد بعد ازارسال مخاطب در گروه پیامی مبنی بر ذخیره شدن شماره مخاطب ارسال میگردد‼️
 
 ورود خودکار به لینک ها روشن / خاموش
@@ -528,24 +528,24 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
 
 شماره تلفن های ذخیره شده : ]] .. tostring(contacts)
  return tdcli.sendMessage(msg.chat_id_, 0, 1, text, 1, "")
-    elseif text_:match("^[!/#](addedmsg) (.*)") then
+    elseif text_:match("(پیام ذخیره مخاطب) (.*)") then
       local matches = {
-        text_:match("^[!/#](addedmsg) (.*)")
+        text_:match("(پیام ذخیره مخاطب) (.*)")
       }
       if #matches == 2 then
-        if matches[2] == "on" then
+        if matches[2] == "روشن" then
           redis:set("tabchi:" .. tostring(tabchi_id) .. ":addedmsg", true)
           save_log("User " .. msg.sender_user_id_ .. ", Turned On Added Message")
-          return "Added Message Turned On"
-        elseif matches[2] == "off" then
+          return "پیام ذخیره شماره تلفن مخاطب روشن شد"
+        elseif matches[2] == "خاموش" then
           redis:del("tabchi:" .. tostring(tabchi_id) .. ":addedmsg")
           save_log("User " .. msg.sender_user_id_ .. ", Turned Off Added Message")
-          return "Added Message Turned Off"
+          return "پیام ذخیره شماره تلفن مخاطب خاموش شد"
         end
       end
     elseif text_:match("(افزودن مخاطبین) (.*)") then
       local matches = {
-        text_:match("^(افزودن مخاطبین) (.*)")
+        text_:match("(افزودن مخاطبین) (.*)")
       }
       if #matches == 2 then
         if matches[2] == "فعال" then
@@ -558,24 +558,24 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
           return "افزودن مخاطبین غیرفعال شد"
         end
       end
-    elseif text_:match("^[!/#](markread) (.*)") then
+    elseif text_:match("(تیک دار) (.*)") then
       local matches = {
-        text_:match("^[!/#](markread) (.*)")
+        text_:match("(تیک دار) (.*)")
       }
       if #matches == 2 then
-        if matches[2] == "on" then
+        if matches[2] == "روشن" then
           redis:set("tabchi:" .. tostring(tabchi_id) .. ":markread", true)
           save_log("User " .. msg.sender_user_id_ .. ", Turned On Markread")
-          return "Markread Turned On"
-        elseif matches[2] == "off" then
+          return "تیک دار کردن پیام ها روشن شد"
+        elseif matches[2] == "خاموش" then
           redis:del("tabchi:" .. tostring(tabchi_id) .. ":markread")
           save_log("User " .. msg.sender_user_id_ .. ", Turned Off Markread")
-          return "Markread Turned Off"
+          return "تیک دار کردن پیام ها خاموش شد"
         end
       end
-    elseif text_:match("^(ورود خودکار به لینک ها) (.*)") then
+    elseif text_:match("(ورود خودکار به لینک ها) (.*)") then
       local matches = {
-        text_:match("^(ورود خودکار به لینک ها) (.*)")
+        text_:match("(ورود خودکار به لینک ها) (.*)")
       }
       if #matches == 2 then
         if matches[2] == "روشن" then
@@ -603,9 +603,9 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
           return "ذخیره خودکار لینک ها خاموش شد"
         end
       end
-    elseif text_:match("^(افزودن مخاطبین) (.*)") then
+    elseif text_:match("(افزودن مخاطبین) (.*)") then
       local matches = {
-        text_:match("^(افزودن مخاطبین) (.*)")
+        text_:match("(افزودن مخاطبین) (.*)")
       }
       if #matches == 2 then
         if matches[2] == "روشن" then
