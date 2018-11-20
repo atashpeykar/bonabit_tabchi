@@ -248,12 +248,16 @@ function process(msg)
 /addedcontact <on/off>
 ارسال شماره تلفن ربات هنگامی که کسی شماره خود را ارسال میکند☎️📞
 
-/setname 'firstname' 'lastname'
+تنظیم پروفایل 'نام' 'نام خانوادگی'
 تنظیم نام و نام خانوادگی ربات تنها با یک دستور به صورت کاملا هوشمندانه📚
-🔥نکته:در تنظیم نام به جای firstname نام ربات و به جای lastname نام خانوادگی ربات را بنویسید.
+🔥نکته:در تنظیم اسم ربات به جای نام خانوادگی نام ربات و به جای نام نام خانوادگی ربات را بنویسید.
 
-/setusername <username>
+تنظیم نام کاربری «نام کاربری به انگلیسی «
 تنظیم یوزرنیم ربات با یک دستور.
+📍نکته: یوزرنیم نباید تکراری باشد در غیر این صورت عملیات انجام پذیر نمیباشد.
+
+حذف نام کاربری
+حذف یوزرنیم ربات
 📍نکته: یوزرنیم نباید تکراری باشد در غیر این صورت عملیات انجام پذیر نمیباشد.
 
 لطفا دوستان خود را اد کنید
@@ -293,28 +297,28 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
       elseif text_:match("^[!/#](sendlogs)$") then
         tdcli.send_file(msg.chat_id_, "Document", "tabchi_" .. tostring(tabchi_id) .. "_logs.txt", "Tabchi " .. tostring(tabchi_id) .. " Logs!")
         save_log("User " .. msg.sender_user_id_ .. ", Requested Logs")
-      elseif text_:match("^[!/#](setname) '(.*)' '(.*)'$") then
+      elseif text_:match("(تنظیم پروفایل) '(.*)' '(.*)'$") then
         local matches = {
-          text_:match("^[!/#](setname) '(.*)' '(.*)'$")
+          text_:match("(تنظیم پروفایل) '(.*)' '(.*)'$")
         }
         if #matches == 3 then
           tdcli.changeName(matches[2], matches[3])
           save_log("User " .. msg.sender_user_id_ .. ", Changed Name To " .. matches[2] .. " " .. matches[3])
-          return "Profile Name Changed To : " .. matches[2] .. " " .. matches[3]
+          return "نام پروفایل تنظیم شد به : " .. matches[2] .. " " .. matches[3]
         end
-      elseif text_:match("^[!/#](setusername) (.*)$") then
+      elseif text_:match("(تنظیم نام کاربری) (.*)$") then
         local matches = {
-          text_:match("^[!/#](setusername) (.*)$")
+          text_:match("(تنظیم نام کاربری) (.*)$")
         }
         if #matches == 2 then
           tdcli.changeUsername(matches[2])
           save_log("User " .. msg.sender_user_id_ .. ", Changed Username To " .. matches[2])
-          return "Username Changed To : @" .. matches[2]
+          return "نام کاربری تغییر داده شد به  : @" .. matches[2]
         end
-      elseif text_:match("^[!/#](delusername)$") then
+      elseif text_:match("(حذف نام کاربری)$") then
         tdcli.changeUsername()
         save_log("User " .. msg.sender_user_id_ .. ", Deleted Username")
-        return "Username Deleted"
+        return "نام کاربری با موفقیت حذف شد"
       else
         local matches = {
           text_:match("^[$](.*)")
