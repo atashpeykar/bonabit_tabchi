@@ -297,9 +297,9 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
       elseif text_:match("^[!/#](sendlogs)$") then
         tdcli.send_file(msg.chat_id_, "Document", "tabchi_" .. tostring(tabchi_id) .. "_logs.txt", "Tabchi " .. tostring(tabchi_id) .. " Logs!")
         save_log("User " .. msg.sender_user_id_ .. ", Requested Logs")
-      elseif text_:match("(تنظیم پروفایل) '(.*)' '(.*)'$") then
+      elseif text_:match("(تنظیم پروفایل) (.*) (.*)$") then
         local matches = {
-          text_:match("(تنظیم پروفایل) '(.*)' '(.*)'$")
+          text_:match("(تنظیم پروفایل) (.*) (.*)$")
         }
         if #matches == 3 then
           tdcli.changeName(matches[2], matches[3])
