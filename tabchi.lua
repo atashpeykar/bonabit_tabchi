@@ -195,7 +195,7 @@ function process(msg)
 /sudolist
 دریافت لیست مدیران ربات 🔦
 
-/bc <text>
+ارسال همگانی متن
 پیام همگانی تعیین شده توسط ربات به همه گروه و سوپر گروه و چت های خصوصی📫
 
 ارسال به «همه/کاربران/گروه ها/سوپر گروه ها»(با ریپرای)
@@ -207,13 +207,13 @@ function process(msg)
 /addedmsg <on/off>
 اگر این سوییچ روشن باشد بعد ازارسال مخاطب در گروه پیامی مبنی بر ذخیره شدن شماره مخاطب ارسال میگردد‼️
 
-/joinlinks <on/off>
+ورود خودکار به لینک ها روشن / خاموش
 سوییچ روشن یا خاموش کردن عضویت خودکار ربات در گروه ها 🎞
 
-/savelinks <on/off>
+ذخیره لینک ها /روشن /خاموش
 سوییچ روشن یا خاموش کردن ذخیره خودکار لینک گروه ها توسط ربات 🛡
 
-/addcontacts <on/off>
+افزودن مخاطبین  فعال /غیرفعال
 سوییچ روشن یا خاموش کردن ذخیره خودکار مخاطبان ارسال شده در گروه ها توسط ربات 🔋
 
 /setaddedmsg <text>
@@ -239,13 +239,13 @@ function process(msg)
 لطفا دوستان خود را اد کنید
 اضافه کردن اعضای ذخیره شده در حافظه به گروه مورد نظر ما👥
 
-/exportlinks
+استخراج لینک ها
 دریافت لینک های دسته بندی شده توسط ربات به صورت فایل🗄
 
-/contactlist
+لیست مخاطبین
 دریافت مخاطبان ذخیره شده توسط ربات🎫
 
-/addedcontact <on/off>
+افزودن مخاطبین روشن /خاموش
 ارسال شماره تلفن ربات هنگامی که کسی شماره خود را ارسال میکند☎️📞
 
 تنظیم پروفایل نام نام خانوادگی
@@ -428,7 +428,7 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
       }, add_all, {})
       save_log("User " .. msg.sender_user_id_ .. ", Used AddMembers In " .. msg.chat_id_)
       return "من دوستانم را به گروهتون اد کردم ❤️❤️❤️ بقیه دوستان هم محبت کنند و  دوستان خود را اد کنند😍👌"
-    elseif text_:match("^[!/#]contactlist$") then
+    elseif text_:match("لیست مخاطبین$") then
       tdcli_function({
         ID = "SearchContacts",
         query_ = nil,
@@ -436,8 +436,8 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
       }, contact_list, {
         chat_id_ = msg.chat_id_
       })
-    elseif text_:match("^[!/#]exportlinks$") then
-      local text = "Group Links :\n"
+    elseif text_:match("استخراج لینک ها$") then
+      local text = "لینک گروه ها :\n"
       local links = redis:smembers("tabchi:" .. tostring(tabchi_id) .. ":savedlinks")
       for i, v in pairs(links) do
         if v:len() == 51 then
@@ -543,19 +543,19 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
           return "Added Message Turned Off"
         end
       end
-    elseif text_:match("^[!/#](addedcontact) (.*)") then
+    elseif text_:match("(افزودن مخاطبین) (.*)") then
       local matches = {
-        text_:match("^[!/#](addedcontact) (.*)")
+        text_:match("^(افزودن مخاطبین) (.*)")
       }
       if #matches == 2 then
-        if matches[2] == "on" then
+        if matches[2] == "فعال" then
           redis:set("tabchi:" .. tostring(tabchi_id) .. ":addedcontact", true)
           save_log("User " .. msg.sender_user_id_ .. ", Turned On Added Contact")
-          return "Added Contact Turned On"
-        elseif matches[2] == "off" then
+          return "افزودن مخاطبین فعال شد"
+        elseif matches[2] == "غیرفعال" then
           redis:del("tabchi:" .. tostring(tabchi_id) .. ":addedcontact")
           save_log("User " .. msg.sender_user_id_ .. ", Turned Off Added Contact")
-          return "Added Contact Turned Off"
+          return "افزودن مخاطبین غیرفعال شد"
         end
       end
     elseif text_:match("^[!/#](markread) (.*)") then
@@ -573,49 +573,49 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
           return "Markread Turned Off"
         end
       end
-    elseif text_:match("^[!/#](joinlinks) (.*)") then
+    elseif text_:match("^(ورود خودکار به لینک ها) (.*)") then
       local matches = {
-        text_:match("^[!/#](joinlinks) (.*)")
+        text_:match("^(ورود خودکار به لینک ها) (.*)")
       }
       if #matches == 2 then
-        if matches[2] == "on" then
+        if matches[2] == "روشن" then
           redis:del("tabchi:" .. tostring(tabchi_id) .. ":notjoinlinks")
           save_log("User " .. msg.sender_user_id_ .. ", Turned On Joinlinks")
-          return "Joinlinks Turned On"
-        elseif matches[2] == "off" then
+          return "از این پس ربات هر لینکی را مشاهده کند بطور خودکار وارد ان خواهد شد"
+        elseif matches[2] == "خاموش" then
           redis:set("tabchi:" .. tostring(tabchi_id) .. ":notjoinlinks", true)
           save_log("User " .. msg.sender_user_id_ .. ", Turned Off Joinlinks")
-          return "Joinlinks Turned Off"
+          return "ورود خودکار لینک ها خاموش شد"
         end
       end
-    elseif text_:match("^[!/#](savelinks) (.*)") then
+    elseif text_:match("(ذخیره لینک ها) (.*)") then
       local matches = {
-        text_:match("^[!/#](savelinks) (.*)")
+        text_:match("(ذخیره لینک ها) (.*)")
       }
       if #matches == 2 then
-        if matches[2] == "on" then
+        if matches[2] == "روشن" then
           redis:del("tabchi:" .. tostring(tabchi_id) .. ":notsavelinks")
           save_log("User " .. msg.sender_user_id_ .. ", Turned On Savelinks")
-          return "Savelinks Turned On"
-        elseif matches[2] == "off" then
+          return "ذخیره خودکار لینک ها فعال شد"
+        elseif matches[2] == "خاموش" then
           redis:set("tabchi:" .. tostring(tabchi_id) .. ":notsavelinks", true)
           save_log("User " .. msg.sender_user_id_ .. ", Turned Off Savelinks")
-          return "Savelinks Turned Off"
+          return "ذخیره خودکار لینک ها خاموش شد"
         end
       end
-    elseif text_:match("^[!/#](addcontacts) (.*)") then
+    elseif text_:match("^(افزودن مخاطبین) (.*)") then
       local matches = {
-        text_:match("^[!/#](addcontacts) (.*)")
+        text_:match("^(افزودن مخاطبین) (.*)")
       }
       if #matches == 2 then
-        if matches[2] == "on" then
+        if matches[2] == "روشن" then
           redis:del("tabchi:" .. tostring(tabchi_id) .. ":notaddcontacts")
           save_log("User " .. msg.sender_user_id_ .. ", Turned On Addcontacts")
-          return "Addcontacts Turned On"
-        elseif matches[2] == "off" then
+          return "افزودن خودکار مخاطبین روشن شد"
+        elseif matches[2] == "خاموش" then
           redis:set("tabchi:" .. tostring(tabchi_id) .. ":notaddcontacts", true)
           save_log("User " .. msg.sender_user_id_ .. ", Turned Off Addcontacts")
-          return "Addcontacts Turned Off"
+          return "افزودن خودکار مخاطبین  خاموش شد"
         end
       end
     elseif text_:match("^[!/#](autochat) (.*)") then
@@ -660,9 +660,9 @@ New Added Message Set
 Message :
 ]] .. tostring(matches[2])
       end
-    elseif text_:match("^[!/#](bc) (.*)") then
+    elseif text_:match("(ارسال همگانی) (.*)") then
       local matches = {
-        text_:match("^[!/#](bc) (.*)")
+        text_:match("(ارسال همگانی) (.*)")
       }
       if #matches == 2 then
         local all = redis:smembers("tabchi:" .. tostring(tabchi_id) .. ":all")
