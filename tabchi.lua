@@ -198,7 +198,7 @@ function process(msg)
 /bc <text>
 پیام همگانی تعیین شده توسط ربات به همه گروه و سوپر گروه و چت های خصوصی📫
 
-/fwd <all/users/gps/sgps> (on reply)
+ارسال به «همه/کاربران/گروه ها/سوپر گروه ها»(با ریپرای)
 فروارد پیام رپلای شده به همه/کاربران/گروه ها/سوپر گروه ها جهت افزایش بازدید و تبلیغات 🔎
 
 تکرار کن <متن>
@@ -505,8 +505,10 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
       local contacts = redis:get("tabchi:" .. tostring(tabchi_id) .. ":totalcontacts")
       local query = tostring(gps) .. " " .. tostring(sgps) .. " " .. tostring(pvs) .. " " .. tostring(links) .. " " .. tostring(sudo) .. " " .. tostring(contacts)
           local text = [[
-		  
-ساخته شده توسط: @bonabit
+		
+برنامه نویس: @Azarbinab
+		
+کانال ما: @bonabit
 
 تعداد کاربران : ]] .. tostring(pvs) .. [[
 
@@ -679,12 +681,12 @@ Message :
         save_log("User " .. msg.sender_user_id_ .. ", Used BC, Content " .. matches[2])
         return "Sent!"
       end
-    elseif text_:match("^[!/#](fwd) (.*)$") then
+    elseif text_:match("^(ارسال به) (.*)$") then
       local matches = {
-        text_:match("^[!/#](fwd) (.*)$")
+        text_:match("(ارسال به) (.*)$")
       }
       if #matches == 2 then
-        if matches[2] == "all" then
+        if matches[2] == "همه" then
           local all = redis:smembers("tabchi:" .. tostring(tabchi_id) .. ":all")
           local id = msg.reply_to_message_id_
           for i, v in pairs(all) do
@@ -700,7 +702,7 @@ Message :
             }, dl_cb, nil)
           end
           save_log("User " .. msg.sender_user_id_ .. ", Used Fwd All")
-        elseif matches[2] == "usrs" then
+        elseif matches[2] == "کاربران" then
           local all = redis:smembers("tabchi:" .. tostring(tabchi_id) .. ":pvis")
           local id = msg.reply_to_message_id_
           for i, v in pairs(all) do
@@ -716,7 +718,7 @@ Message :
             }, dl_cb, nil)
           end
           save_log("User " .. msg.sender_user_id_ .. ", Used Fwd Users")
-        elseif matches[2] == "gps" then
+        elseif matches[2] == "گروه ها" then
           local all = redis:smembers("tabchi:" .. tostring(tabchi_id) .. ":groups")
           local id = msg.reply_to_message_id_
           for i, v in pairs(all) do
@@ -732,7 +734,7 @@ Message :
             }, dl_cb, nil)
           end
           save_log("User " .. msg.sender_user_id_ .. ", Used Fwd Gps")
-        elseif matches[2] == "sgps" then
+        elseif matches[2] == "سوپر گروه ها" then
           local all = redis:smembers("tabchi:" .. tostring(tabchi_id) .. ":channels")
           local id = msg.reply_to_message_id_
           for i, v in pairs(all) do
@@ -750,7 +752,7 @@ Message :
           save_log("User " .. msg.sender_user_id_ .. ", Used Fwd Sgps")
         end
       end
-      return "Sent!"
+      return "پیام موردنظر با موفقیت ارسال شد!"
     else
       local matches = {
         text_:match("(تکرار کن) (.*)")
