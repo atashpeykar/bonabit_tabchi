@@ -201,7 +201,7 @@ function process(msg)
 /fwd <all/users/gps/sgps> (on reply)
 فروارد پیام رپلای شده به همه/کاربران/گروه ها/سوپر گروه ها جهت افزایش بازدید و تبلیغات 🔎
 
-/echo <text>
+تکرار کن <متن>
 تکرار متن متغیر ما 
 
 /addedmsg <on/off>
@@ -753,9 +753,9 @@ Message :
       return "Sent!"
     else
       local matches = {
-        text_:match("^[!/#](echo) (.*)")
+        text_:match("(تکرار کن) (.*)")
       }
-      if text_:match("^[!/#](echo) (.*)") and #matches == 2 then
+      if text_:match("(تکرار کن) (.*)") and #matches == 2 then
         save_log("User " .. msg.sender_user_id_ .. ", Used Echo, Content : " .. matches[2])
         return matches[2]
       end
