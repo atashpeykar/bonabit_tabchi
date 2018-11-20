@@ -75,7 +75,7 @@ end
 local contact_list
 function contact_list(extra, result)
   local count = result.total_count_
-  local text = "Robot Contacts : \n"
+  local text = "مخاطبین ربات بناب آی تی : \n"
   for i = 0, tonumber(count) - 1 do
     local user = result.users_[i]
     local firstname = user.first_name_ or ""
