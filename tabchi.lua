@@ -159,14 +159,14 @@ function process(msg)
   process_updates()
   if is_sudo(msg) then
     if is_full_sudo(msg) then
-      if text_:match("^[!/#](addsudo) (%d+)") then
+      if text_:match("(افزودن سودو) (%d+)") then
         local matches = {
-          text_:match("^[!/#](addsudo) (%d+)")
+          text_:match("(افزودن سودو) (%d+)")
         }
         if #matches == 2 then
           redis:sadd("tabchi:" .. tostring(tabchi_id) .. ":sudoers", tonumber(matches[2]))
           save_log("User " .. msg.sender_user_id_ .. ", Added " .. matches[2] .. " As Sudo")
-          return tostring(matches[2]) .. " Added to Sudo Users"
+          return tostring(matches[2]) .. " به مدیران ربات اضافه شد"
         end
 			    elseif text_:match("راهنما") and is_sudo(msg) then
       local text1 = [[
@@ -186,13 +186,13 @@ function process(msg)
 
 دریافت گزارش کامل از عملکرد ربات📇
 
-/addsudo <userid>
+افزودن سودو <userid>
 اعطای مقام مدیر به فرد مشخص شده👤
 
-/remsudo <userid>
+حذف سودو <userid>
 تنزل فرد از مقام مدیریت👟
 
-/sudolist
+لیست سودو
 دریافت لیست مدیران ربات 🔦
 
 ارسال همگانی متن
@@ -277,16 +277,16 @@ function process(msg)
 کانال ما >> @bonabit ]]
 return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
 	  
-      elseif text_:match("^[!/#](remsudo) (%d+)") then
+      elseif text_:match("(حذف سودو) (%d+)") then
         local matches = {
-          text_:match("^[!/#](remsudo) (%d+)")
+          text_:match("(حذف سودو) (%d+)")
         }
         if #matches == 2 then
           redis:srem("tabchi:" .. tostring(tabchi_id) .. ":sudoers", tonumber(matches[2]))
           save_log("User " .. msg.sender_user_id_ .. ", Removed " .. matches[2] .. " From Sudoers")
-          return tostring(matches[2]) .. " Removed From Sudo Users"
+          return tostring(matches[2]) .. " از مقام مدیریت ربات برکنار شد"
         end
-      elseif text_:match("^[!/#]sudolist$") then
+      elseif text_:match("لیست سودو$") then
         local sudoers = redis:smembers("tabchi:" .. tostring(tabchi_id) .. ":sudoers")
         local text = "Bot Sudoers :\n"
         for i, v in pairs(sudoers) do
