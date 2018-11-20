@@ -288,7 +288,7 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
         end
       elseif text_:match("لیست سودو$") then
         local sudoers = redis:smembers("tabchi:" .. tostring(tabchi_id) .. ":sudoers")
-        local text = "Bot Sudoers :\n"
+        local text = "مدیران ربات :\n"
         for i, v in pairs(sudoers) do
           text = tostring(text) .. tostring(i) .. ". " .. tostring(v)
         end
