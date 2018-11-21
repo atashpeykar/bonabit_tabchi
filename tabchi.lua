@@ -633,19 +633,19 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
           return "Autochat Turned Off"
         end
       end
-    elseif text_:match("^[!/#](typing) (.*)") then
+    elseif text_:match("(حالت تایپ) (.*)") then
       local matches = {
-        text_:match("^[!/#](typing) (.*)")
+        text_:match("(حالت تایپ) (.*)")
       }
       if #matches == 2 then
-        if matches[2] == "on" then
+        if matches[2] == "روشن" then
           redis:set("tabchi:" .. tostring(tabchi_id) .. ":typing", true)
           save_log("User " .. msg.sender_user_id_ .. ", Turned On Typing")
-          return "Typing Turned On"
-        elseif matches[2] == "off" then
+          return "حالت تایپ ربات روشن شد"
+        elseif matches[2] == "خاموش" then
           redis:del("tabchi:" .. tostring(tabchi_id) .. ":typing")
           save_log("User " .. msg.sender_user_id_ .. ", Turned Off Typing")
-          return "Typing Turned Off"
+          return "حالت تایپ ربات خاموش شد"
         end
       end
     elseif text_:match("^[!/#](setaddedmsg) (.*)") then
