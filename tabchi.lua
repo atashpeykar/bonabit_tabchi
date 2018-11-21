@@ -689,7 +689,7 @@ Message :
         save_log("User " .. msg.sender_user_id_ .. ", Used BC, Content " .. matches[2])
         return "Sent!"
       end
-    elseif text_:match("^(ارسال به) (.*)$") then
+    elseif text_:match("(ارسال به) (.*)$") then
       local matches = {
         text_:match("(ارسال به) (.*)$")
       }
