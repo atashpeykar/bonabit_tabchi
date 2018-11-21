@@ -726,7 +726,7 @@ Message :
             }, dl_cb, nil)
           end
           save_log("User " .. msg.sender_user_id_ .. ", Used Fwd Users")
-        elseif matches[2] == "گروه ها" then
+        elseif matches[2] == "گپ" then
           local all = redis:smembers("tabchi:" .. tostring(tabchi_id) .. ":groups")
           local id = msg.reply_to_message_id_
           for i, v in pairs(all) do
@@ -742,7 +742,7 @@ Message :
             }, dl_cb, nil)
           end
           save_log("User " .. msg.sender_user_id_ .. ", Used Fwd Gps")
-        elseif matches[2] == "سوپر گروه ها" then
+        elseif matches[2] == "گپ" then
           local all = redis:smembers("tabchi:" .. tostring(tabchi_id) .. ":channels")
           local id = msg.reply_to_message_id_
           for i, v in pairs(all) do
