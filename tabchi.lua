@@ -917,38 +917,5 @@ Bia pv]]
     tdcli.getChats("9223372036854775807", 0, 20)
   end
 end
-local function bonabit (msg ,matches)
-if matches[1]:lower () == 'ping' or matches[1] == 'پینگ'
-then
-return '#آنلایـــــــــــــــــــنم دوســــــــــــــــت عــزیــــــــــــــــز😐❤️"'
-end
-if matches[1] == 'ربات کار نمیکنه' then
-return 'مگه(تـــــــــــــــــــو ) میـــــــزارے #آفـــلاین باشـــــــم 😉❤️'
-end
-if matches[1] == 'بوت' then
-return 'نزن داداش خســــــــــــــته میشی خــــــوابت مــــــیاد😝❤️'
-end
-if matches[1] == 'انی' then
-return 'نزن گفـــــــــــتم  #آنلایـــــــــــــــــنم دیـــــــــــــــــــگه🙁❤️ '
-end
- if matches[1] == 'آنلاینی' then
-return 'انلاینم #مدیــــــــــــــرجون هـواســـــــم به #گـــروه هست بـــرو بخـــــــــــــواب 🚶❤️'
-end
-if matches[1]:lower () == 'bot' or matches[1] == 'ربات' then
-return 'مشغولـــــــــــــــم ☹️❤️'
-end
-if matches[1] == 'خاموشه' or matches[1] == 'ربات خاموشه' then
-return '😒هــی چ دارے  میـــــگے نمی بینــــی  روشنم'
-end
-if matches[1] == 'افه' or matches[1] == 'آفه' then
-return 'فعــــــــــــالم تو زیـــر آبــــے✌️'
-end
-if matches[1] == 'ربات خوبیه' or matches[1] == 'رباتتون را از کی خریدید؟' then
-return 'لطفا برای خرید این ربات به آی دی زیر پیام دهید\n @azarbinab\n '
-end
-if matches[1] == 'من این رباتو میخوام' or matches[1] == 'مدیر ربات کیه' then
-return 'لطفا برای خرید این ربات به آی دی زیر پیام دهید\n @azarbinab\n '
-end
-end
 
 return {update = update}
