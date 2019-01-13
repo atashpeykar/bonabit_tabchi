@@ -218,24 +218,24 @@ function process(msg)
 افزودن مخاطبین  فعال /غیرفعال
 سوییچ روشن یا خاموش کردن ذخیره خودکار مخاطبان ارسال شده در گروه ها توسط ربات 🔋
 
-/setaddedmsg <text>
-شخصی سازی متن ارسالی جهت ذخیره کردن شماره ها و عکس العمل در برابر ان.
+پیام ذخیره مخاطب (متن )
+پیام ارسالی توسط ربات موقع ذخیره خودکار شماره تلفن کاربران را تعیین می کنید
 
 تیک دار روشن / خاموش
 سوییچ تعویض حالت خوانده شدن پیام ها توسط ربات تبلیغاتی🔑👓
 
-/setanswer '<word>'  <text>
-تنظیم <text> به عنوان جواب اتوماتیک <word> جهت گفتکوی هوشمندانه در گروه ها📲
-🚨نکته :‌<word> باید داخل '' باشد
+تنظیم جواب خودکار '<کلمه>'  <متن>
+تنظیم <متن> به عنوان جواب اتوماتیک <کلمه> جهت گفتکوی هوشمندانه در گروه ها📲
+🚨نکته :‌<کلمه> باید داخل '' باشد
 
 /delanswer <word>
 حذف جواب مربوط به <word>
 
-/answers
+جواب خودکار
 لیست جواب های اتوماتیک
 
-/autochat <on/off>
-سوییچ روشن یا خاموش کردن پاسخگویی اتوماتیک
+جوابگویی خودکار روشن / خاموش
+سوییچ روشن یا خاموش کردن جوابگویی اتوماتیک
 
 
 لطفا دوستان خود را اد کنید
@@ -341,13 +341,13 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
         return "Sent!"
       end
 	  
-    elseif text_:match("^[!/#](setanswer) '(.*)' (.*)") then
+    elseif text_:match("(تنظیم جواب خودکار) '(.*)' (.*)") then
       local matches = {
-        text_:match("^[!/#](setanswer) '(.*)' (.*)")
+        text_:match("(تنظیم جواب خودکار) '(.*)' (.*)")
       }
       if #matches == 3 then
-        redis:hset("tabchi:" .. tostring(tabchi_id) .. ":answers", matches[2], matches[3])
-        redis:sadd("tabchi:" .. tostring(tabchi_id) .. ":answerslist", matches[2])
+        redis:hset("tabchi:" .. tostring(tabchi_id) .. ":جواب خودکار", matches[2], matches[3])
+        redis:sadd("tabchi:" .. tostring(tabchi_id) .. ":لیست جواب های خودکار", matches[2])
         save_log("User " .. msg.sender_user_id_ .. ", Set Answer Of " .. matches[2] .. " To " .. maches[3])
         return "Answer for " .. tostring(matches[2]) .. " set to :\n" .. tostring(matches[3])
       end
@@ -356,16 +356,16 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
         text_:match("^[!/#](delanswer) (.*)")
       }
       if #matches == 2 then
-        redis:hdel("tabchi:" .. tostring(tabchi_id) .. ":answers", matches[2])
-        redis:srem("tabchi:" .. tostring(tabchi_id) .. ":answerslist", matches[2])
+        redis:hdel("tabchi:" .. tostring(tabchi_id) .. ":جواب خودکار", matches[2])
+        redis:srem("tabchi:" .. tostring(tabchi_id) .. ":لیست جواب های خودکار", matches[2])
         save_log("User " .. msg.sender_user_id_ .. ", Deleted Answer Of " .. matches[2])
         return "Answer for " .. tostring(matches[2]) .. " deleted"
       end
-    elseif text_:match("^[!/#]answers$") then
-      local text = "Bot auto answers :\n"
-      local answrs = redis:smembers("tabchi:" .. tostring(tabchi_id) .. ":answerslist")
+    elseif text_:match("جواب خودکار$") then
+      local text = "جواب های خودکار ربات ممبر و تبلیغ گر بناب آی تی :\n"
+      local answrs = redis:smembers("tabchi:" .. tostring(tabchi_id) .. ":لیست جواب های خودکار")
       for i, v in pairs(answrs) do
-        text = tostring(text) .. tostring(i) .. ". " .. tostring(v) .. " : " .. tostring(redis:hget("tabchi:" .. tostring(tabchi_id) .. ":answers", v)) .. "\n"
+        text = tostring(text) .. tostring(i) .. ". " .. tostring(v) .. " : " .. tostring(redis:hget("tabchi:" .. tostring(tabchi_id) .. ":جواب خودکار", v)) .. "\n"
       end
       save_log("User " .. msg.sender_user_id_ .. ", Requested Answers List")
       return text
@@ -620,19 +620,19 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
           return "افزودن خودکار مخاطبین  خاموش شد"
         end
       end
-    elseif text_:match("^[!/#](autochat) (.*)") then
+    elseif text_:match("(جوابگویی خودکار) (.*)") then
       local matches = {
-        text_:match("^[!/#](autochat) (.*)")
+        text_:match("(جوابگویی خودکار) (.*)")
       }
       if #matches == 2 then
-        if matches[2] == "on" then
+        if matches[2] == "روشن" then
           redis:set("tabchi:" .. tostring(tabchi_id) .. ":autochat", true)
           save_log("User " .. msg.sender_user_id_ .. ", Turned On Autochat")
-          return "Autochat Turned On"
-        elseif matches[2] == "off" then
+          return "جوابگویی خودکار روشن شد"
+        elseif matches[2] == "خاموش" then
           redis:del("tabchi:" .. tostring(tabchi_id) .. ":autochat")
           save_log("User " .. msg.sender_user_id_ .. ", Turned Off Autochat")
-          return "Autochat Turned Off"
+          return "جوابگویی خودکار خاموش شد"
         end
       end
     elseif text_:match("(حالت تایپ) (.*)") then
@@ -650,9 +650,9 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
           return "حالت تایپ ربات خاموش شد"
         end
       end
-    elseif text_:match("^[!/#](setaddedmsg) (.*)") then
+    elseif text_:match("(پیام ذخیره مخاطب) (.*)") then
       local matches = {
-        text_:match("^[!/#](setaddedmsg) (.*)")
+        text_:match("((پیام ذخیره مخاطب) (.*)")
       }
       if #matches == 2 then
         redis:set("tabchi:" .. tostring(tabchi_id) .. ":addedmsgtext", matches[2])
@@ -845,9 +845,9 @@ This code]])
         tdcli.sendMessage(msg.chat_id_, msg.id_, 1, result, 1, "html")
       end
       process_links(text_)
-      if redis:sismember("tabchi:" .. tostring(tabchi_id) .. ":answerslist", msg.content_.text_) then
+      if redis:sismember("tabchi:" .. tostring(tabchi_id) .. ":لیست جواب های خودکار", msg.content_.text_) then
         if msg.sender_user_id_ ~= our_id then
-          local answer = redis:hget("tabchi:" .. tostring(tabchi_id) .. ":answers", msg.content_.text_)
+          local answer = redis:hget("tabchi:" .. tostring(tabchi_id) .. ":جواب خودکار", msg.content_.text_)
           if redis:get("tabchi:" .. tostring(tabchi_id) .. ":typing") then
             tdcli.sendChatAction(msg.chat_id_, "Typing", 100)
           end
