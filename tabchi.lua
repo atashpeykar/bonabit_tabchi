@@ -173,7 +173,7 @@ function process(msg)
 	  
 راهنمای نسخه بتا ربات ممبر و تبلیغ گر بناب آی تی
 
-ارسال پیام به (نام کاربری)
+ پیام (نام کاربری)
 ارسال (متن) به (نام کاربری)
 
 بلاک نام کاربری
@@ -330,9 +330,9 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
         end
       end
     end
-    if text_:match("^ارسال پیام به (%d+) (.*)") then
+    if text_:match("^پیام (%d+) (.*)") then
       local matches = {
-        text_:match("^ارسال پیام به (%d+) (.*)")
+        text_:match("^پیام (%d+) (.*)")
       }
       if #matches == 3 then
         tdcli.sendMessage(tonumber(matches[2]), 0, 1, matches[3], 1, "html")
