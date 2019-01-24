@@ -228,8 +228,8 @@ function process(msg)
 تنظیم <متن> به عنوان جواب اتوماتیک <کلمه> جهت گفتکوی هوشمندانه در گروه ها📲
 🚨نکته :‌<کلمه> باید داخل / / باشد
 
-/delanswer <word>
-حذف جواب مربوط به <word>
+حذف جواب خودکار <کلمه>
+حذف جواب مربوط به <کلمه>
 
 جواب خودکار
 لیست جواب های اتوماتیک
@@ -351,15 +351,15 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
         save_log("User " .. msg.sender_user_id_ .. ", Set Answer Of " .. matches[2] .. " To " .. maches[3])
         return "Answer for " .. tostring(matches[2]) .. " set to :\n" .. tostring(matches[3])
       end
-    elseif text_:match("^[!/#](delanswer) (.*)") then
+    elseif text_:match("^(حذف جواب خودکار) (.*)") then
       local matches = {
-        text_:match("^[!/#](delanswer) (.*)")
+        text_:match("^(حذف جواب خودکار) (.*)")
       }
       if #matches == 2 then
         redis:hdel("tabchi:" .. tostring(tabchi_id) .. ":جواب خودکار", matches[2])
         redis:srem("tabchi:" .. tostring(tabchi_id) .. ":لیست جواب های خودکار", matches[2])
         save_log("User " .. msg.sender_user_id_ .. ", Deleted Answer Of " .. matches[2])
-        return "Answer for " .. tostring(matches[2]) .. " deleted"
+        return "جواب خودکار به پیام  " .. tostring(matches[2]) .. "   با موفقیت از سرور  ربات حذف گردید"
       end
     elseif text_:match("جواب خودکار$") then
       local text = "جواب های خودکار ربات ممبر و تبلیغ گر بناب آی تی :\n"
