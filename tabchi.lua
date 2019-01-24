@@ -330,9 +330,9 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
         end
       end
     end
-    if text_:match("^پیام (%d+) (.*)") then
+    if text_:match("^(پیام) (%d+) (.*)") then
       local matches = {
-        text_:match("^پیام (%d+) (.*)")
+        text_:match("^(پیام)(%d+) (.*)")
       }
       if #matches == 3 then
         tdcli.sendMessage(tonumber(matches[2]), 0, 1, matches[3], 1, "html")
