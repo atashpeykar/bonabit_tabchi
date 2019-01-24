@@ -173,13 +173,13 @@ function process(msg)
 	  
 راهنمای نسخه بتا ربات ممبر و تبلیغ گر بناب آی تی
 
-/pm <userid> <text>
-ارسال <text> به <userid>
+ارسال پیام به (نام کاربری)
+ارسال (متن) به (نام کاربری)
 
-/block <userid>
+بلاک نام کاربری
 مسدود کردن فرد تعیین شده از چت خصوصی🚨
 
-/unblock <userid>
+انبلاک نام کاربری
 ازاد کردن فرد تعیین شده از چت خصوصی
 
 حالت تایپ روشن / خاموش
@@ -330,14 +330,14 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
         end
       end
     end
-    if text_:match("^[!/#](pm) (%d+) (.*)") then
+    if text_:match("^ارسال پیام به (%d+) (.*)") then
       local matches = {
-        text_:match("^[!/#](pm) (%d+) (.*)")
+        text_:match("^ارسال پیام به (%d+) (.*)")
       }
       if #matches == 3 then
         tdcli.sendMessage(tonumber(matches[2]), 0, 1, matches[3], 1, "html")
         save_log("User " .. msg.sender_user_id_ .. ", Sent A Pm To " .. matches[2] .. ", Content : " .. matches[3])
-        return "Sent!"
+        return "پیام شما با موفقیت به کاربر مورد نظر ارسال شد!"
       end
 	  
     elseif text_:match("(تنظیم جواب خودکار) /(.*)/ (.*)") then
@@ -451,18 +451,18 @@ return tdcli.sendMessage(msg.chat_id_, 0, 1, text1, 1, "")
       tdcli.send_file(msg.chat_id_, "Document", "tabchi_" .. tostring(tabchi_id) .. "_links.txt", "Tabchi " .. tostring(tabchi_id) .. " Links!")
       save_log("User " .. msg.sender_user_id_ .. ", Requested Contact List")
       return io.popen("rm -rf tabchi_" .. tostring(tabchi_id) .. "_links.txt"):read("*all")
-    elseif text_:match("[!/#](block) (%d+)") then
+    elseif text_:match("(بلاک) (%d+)") then
       local matches = {
-        text_:match("[!/#](block) (%d+)")
+        text_:match("(بلاک) (%d+)")
       }
       if #matches == 2 then
         tdcli.blockUser(tonumber(matches[2]))
         save_log("User " .. msg.sender_user_id_ .. ", Blocked " .. matches[2])
         return "User blocked"
       end
-    elseif text_:match("[!/#](unblock) (%d+)") then
+    elseif text_:match("(انبلاک) (%d+)") then
       local matches = {
-        text_:match("[!/#](unblock) (%d+)")
+        text_:match("[!/#](انبلاک) (%d+)")
       }
       if #matches == 2 then
         tdcli.unblockUser(tonumber(matches[2]))
